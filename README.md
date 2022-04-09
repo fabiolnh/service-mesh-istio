@@ -8,7 +8,7 @@
 
 ** In this study, we are going to use the k3d to simulate the kubernetes cluster. This tool is easy to redirect port, as we can see under. The tool "kind" (another tool to work with kubernetes) is not so easy to do that.
 
-1) Install k3d through chocolatey (if you are using windows)
+1) Install k3d through WSL2
 2) Create the cluster 
 ```
 k3d cluster create -p "8000:30000@loadbalancer" --agents 2
@@ -21,4 +21,9 @@ k3d cluster create -p "8000:30000@loadbalancer" --agents 2
 3) Change the kube context if you are using another one:
 ```
 kubectl config use-context k3d-k3s-default
+```
+
+4) With WSL2, download the Istio CLI as a form to easily apply the configuration to the kubernetes
+``` 
+* istioctl install
 ```
