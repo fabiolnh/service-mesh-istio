@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nxinx
+spec:
+  selector:
+    matchLabels:
+      app: nxinx
+  template:
+    metadata:
+      labels:
+        app: nxinx
+    spec:
+      containers:
+      - name: nxinx
+        image: nginx
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
