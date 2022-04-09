@@ -4,7 +4,7 @@
 
 ** Istio: It is an opensource project that implements Service Mesh, independently of the language or technology (it works with kubernetes, apache mesos, nomad, etc.)
 
-** Istio creates a proxy inside each POD to receive and to send data between pods. Thorough a Istio control panel layer (in a specific POD), it controls all the proxys
+** Istio creates a proxy (sidecar proxy) inside each POD to receive and to send data between pods. Thorough a Istio control panel layer (in a specific POD), it controls all the proxys
 
 ** In this study, we are going to use the k3d to simulate the kubernetes cluster. This tool is easy to redirect port, as we can see under. The tool "kind" (another tool to work with kubernetes) is not so easy to do that.
 
@@ -25,5 +25,11 @@ kubectl config use-context k3d-k3s-default
 
 4) With WSL2, download the Istio CLI as a form to easily apply the configuration to the kubernetes
 ``` 
-* istioctl install
+istioctl install
+```
+5) To inject the proxy inside all the pods of a specific namespace (default, in this case):
+```
+kubectl label namespace default istio-injection=enabled
+
+* It will affect only the new pods. So, delete the existing ones.
 ```
