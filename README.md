@@ -12,10 +12,12 @@
 2) Create the cluster 
 ```
 k3d cluster create -p "8000:30000@loadbalancer" --agents 2
-8000: local port
-30000: Cluster port. It is going to call the 30000 port of the service
---agents 2: nodes
+
+* 8000: local port
+* 30000: Cluster port. It is going to call the 30000 port of the service
+* --agents 2: nodes
 ```
+
 3) Change the kube context if you are using another one:
 ```
 kubectl config use-context k3d-k3s-default
