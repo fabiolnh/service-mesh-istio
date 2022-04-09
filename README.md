@@ -6,7 +6,7 @@
 
 ** Istio creates a proxy inside each POD to receive and to send data between pods. Thorough a Istio control panel layer (in a specific POD), it controls all the proxys
 
-** In this study, we are going to use the k3d to simulate the kubernetes cluster
+** In this study, we are going to use the k3d to simulate the kubernetes cluster. This tool is easy to redirect port, as we can see under. The tool "kind" (another tool to work with kubernetes) is not so easy to do that.
 
 1) Install k3d through chocolatey (if you are using windows)
 2) Create the cluster 
