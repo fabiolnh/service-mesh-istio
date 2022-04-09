@@ -33,3 +33,10 @@ kubectl label namespace default istio-injection=enabled
 
 * It will affect only the new pods. So, delete the existing ones.
 ```
+6) Install the addons (grafana, jaeger, kiali, promotheus):
+```
+kubectl apply -f *
+* https://github.com/istio/istio/tree/master/samples/addons
+* kubectl get pods -n istio-system (to show all the pods wunning the addons)
+* to run the kiali dashboard: istioctl dashboard kiali
+```
