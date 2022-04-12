@@ -57,3 +57,13 @@ Some concepts:
         3) Locality: specific the location of the pod (Europe, Brazil, etc)
         4) Circuit Breaker: Ex: If the connection from one pod to another stops to answer, waits X seconds and redirect to another one. And wait to connect again when it come back
 ```
+
+To test:
+```
+while true ; do curl http://localhost:8000; echo; sleep 0.5; done;
+```
+
+Annotations:
+```
+* We can create the VirtualService and the Destination Rule through the Kiali or configuring manually the yaml 
+```
