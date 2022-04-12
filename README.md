@@ -40,3 +40,20 @@ kubectl apply -f *
 * kubectl get pods -n istio-system (to show all the pods wunning the addons)
 * to run the kiali dashboard: istioctl dashboard kiali
 ```
+
+Some concepts:
+```
+1) Ingress Gateway: release the input traffic. It connects to the Virtual Service
+2) Virtual Service: Route the traffic (it is not the service from kubernetes), using the Service (from kubernetes) to forward it. It configurates all the proxies. Features:
+  - Match: Ex: Match de URL, foward to some pod 
+  - Retries: Ex: Retries the communication X times to other pod
+  - Fault Injection: Ex: I want to 70% of my services are OK and 30% not, to test the whole application
+  - Timeout: Ex: Iif the answer of the call wait too long, cancel the call
+  - Subsets (v1 and v2): destiny categories (DESTINATION RULES). (What happens with the traffic when it gets to the destiny)
+        1) Selector
+        You can create some destination rules to request some traffic to one and to another. 
+        Ex: 30% to the first one version (v1) and 70% to the second one version (v2). 
+        2) Load Balancer
+        3) Locality: specific the location of the pod (Europe, Brazil, etc)
+        4) Circuit Breaker: Ex: If the connection from one pod to another stops to answer, waits X seconds and redirect to another one. And wait to connect again when it come back
+```
