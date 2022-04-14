@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: nginx-destinationrule
+spec:
+  host: nginx-service # Kubernetes Service
+  subsets:
+    - name: v1
+      labels:
+        version: A
+    - name: v2
+      labels:
+        version: B
