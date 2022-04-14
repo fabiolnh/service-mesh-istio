@@ -1,27 +1,23 @@
-# A Canary Deploy (Two versions)
+# Canary deploy (two versions)
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nxinx
+  name: nginx
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nxinx
+      app: nginx
   template:
     metadata:
       labels:
-        app: nxinx
-        version: A
+        app: nginx
+        version: A  # Important to show in the Istio / Kiali 
     spec:
       containers:
-      - name: nxinx
+      - name: nginx
         image: wesleywillians/nginx-ab
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80
 
@@ -30,25 +26,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nxinx-service
+  name: nginx-b
 spec:
-  replicas: 8 
+  replicas: 1
   selector:
     matchLabels:
-      app: nxinx
+      app: nginx
   template:
     metadata:
       labels:
-        app: nxinx
-        version: B
+        app: nginx
+        version: B # Important to show in the Istio / Kiali 
     spec:
       containers:
-      - name: nxinx
+      - name: nginx
         image: wesleywillians/nginx-ab:b
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 80
 
@@ -61,7 +53,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: nxinx
+    app: nginx
   ports:
   - port: 8000
     targetPort: 80
