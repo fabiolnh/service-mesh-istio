@@ -1,13 +1,5 @@
 # Service Mesh / Istio: Study
 
-** Service Mesh: An Extra layer in the cluster to monitor and modify in real time the app trafics, as well as level up the security and confiability of the ecosystem
-
-** Istio: It is an opensource project that implements Service Mesh, independently of the language or technology (it works with kubernetes, apache mesos, nomad, etc.)
-
-** Istio creates a proxy (sidecar proxy) inside each POD to receive and to send data between pods. Thorough a Istio control panel layer (in a specific POD), it controls all the proxys
-
-** In this study, we are going to use the k3d to simulate the kubernetes cluster. This tool is easy to redirect port, as we can see under. The tool "kind" (another tool to work with kubernetes) is not so easy to do that.
-
 1) Install k3d through WSL2
 2) Create the cluster 
 ```
@@ -43,9 +35,25 @@ kubectl apply -f *
 
 Some concepts:
 ```
+* Service Mesh: An Extra layer in the cluster to monitor and modify in real time the app trafics, as well as level up the security and confiability of the ecosystem
+
+* Istio: It is an opensource project that implements Service Mesh, independently of the language or technology (it works with kubernetes, apache mesos, nomad, etc.)
+
+* Istio creates a proxy (sidecar proxy) inside each POD to receive and to send data between pods. Thorough a Istio control panel layer (in a specific POD), it controls all the proxys
+
+* In this study, we are going to use the k3d to simulate the kubernetes cluster. This tool is easy to redirect port, as we can see under. The tool "kind" (another tool to work with kubernetes) is not so easy to do that.
+
+* Consistent Hash (Stick Session): when a user access one version, it will always access the same version. The load balancer will always forward to that version. If you use weight (percentage for each version), this feature will not work (istio issue. probably will be fixed later). Ways to do the consisten hash:
+  1) httpHeaderName
+  2) httpCookie
+  3) UseSourceIp
+  4) httpQueryParameterName
+
+* Ingress Gateway -> Virtual Service -> Destination Rule
+
 1) Ingress Gateway: release the input traffic. It connects to the Virtual Service
 2) Virtual Service: Route the traffic (it is not the service from kubernetes), using the Service (from kubernetes) to forward it. It configurates all the proxies. Features:
-  - Match: Ex: Match de URL, foward to some pod 
+  - Match: Ex: Match the URL, foward to some pod 
   - Retries: Ex: Retries the communication X times to other pod
   - Fault Injection: Ex: I want to 70% of my services are OK and 30% not, to test the whole application
   - Timeout: Ex: Iif the answer of the call wait too long, cancel the call
