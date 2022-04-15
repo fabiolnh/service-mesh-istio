@@ -55,7 +55,10 @@ Some concepts:
 2) Virtual Service: Route the traffic (it is not the service from kubernetes), using the Service (from kubernetes) to forward it. It configurates all the proxies. Features:
   - Match: Ex: Match the URL, foward to some pod 
   - Retries: Ex: Retries the communication X times to other pod
-  - Fault Injection: Ex: I want to 70% of my services are OK and 30% not, to test the whole application
+  - Fault Injection: 
+      Ex: I want to 70% of my services are OK and 30% not, to test the whole application. 
+      Ex: wait 10s to request an http communitation
+      Ex: return httpStatus 500 of a percentage of all the services
   - Timeout: Ex: Iif the answer of the call wait too long, cancel the call
   - Subsets (v1 and v2): destiny categories (DESTINATION RULES). (What happens with the traffic when it gets to the destiny)
         1) Selector
@@ -63,7 +66,9 @@ Some concepts:
         Ex: 30% to the first one version (v1) and 70% to the second one version (v2). 
         2) Load Balancer
         3) Locality: specific the location of the pod (Europe, Brazil, etc)
-        4) Circuit Breaker: Ex: If the connection from one pod to another stops to answer, waits X seconds and redirect to another one. And wait to connect again when it come back
+        4) Circuit Breaker: 
+          Ex: If the connection from one pod to another stops to answer, waits X seconds and redirect to another one. And wait to connect again when it come back
+          Ex: define a rule that when some microservice gets slow (an example), break the circuit and return an 500 httpStatus (this way we can free the microservice). This way is better than keep the connection. After some time, defined, we can release this microservice again.
 ```
 
 To test:
