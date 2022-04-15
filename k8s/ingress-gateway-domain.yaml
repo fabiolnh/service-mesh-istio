@@ -1,0 +1,67 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: ingress-gateway-k3s
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port: 
+        number: 80 # Everytime that we access the 80 port, through the domain under.
+        name: http
+        protocol: http2
+      hosts:
+      - "*.fabiolnh.com" # domain
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-vs
+spec:
+  hosts: 
+  - "a.fabiolnh.com" # to test, you have to put in your "hosts" file.
+  gateways:
+  - ingress-gateway-k3s # need this to the ingress gateway access this virtual service
+  http:
+    - route:
+        - destination:
+           host: nginx-service
+           subset: v1
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-vs-b
+spec:
+  hosts: 
+  - "b.fabiolnh.com" # to test, you have to put in your "hosts" file.
+  gateways:
+  - ingress-gateway-k3s # need this to the ingress gateway access this virtual service
+  http:
+    - route:
+        - destination:
+           host: nginx-service
+           subset: v2
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: nginx-dr
+spec:
+  host: nginx-service
+  trafficPolicy:
+    loadBalancer:
+      simple: RANDOM
+  subsets:
+    - name: v1
+      labels:
+        version: A
+      trafficPolicy:
+        loadBalancer:
+          simple: LEAST_CONN
+    - name: v2
+      labels:
+        version: B
