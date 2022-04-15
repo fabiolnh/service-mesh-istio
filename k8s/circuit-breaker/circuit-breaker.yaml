@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: circuit-breaker-servicex
+spec:
+  host: servicex-service.default.svc.cluster.local
+  trafficPolicy:
+    outlierDetection:
+      consecutive5xxErrors: 20 # The circuit will be opened if occours 10 erros consecutives
+      # consecutiveGatewayErrors: 10  # if you want to work with 503, 502, 504 (instead of the whole 5xx)
+      interval: 20s # in the interval of 20 seconds
+      baseEjectionTime: 30s # the service will be offline for 30 seconds. After 30 seconds, it will be available again
+      maxEjectionPercent: 100 # will eliminate 100% of the pods that have this problem
