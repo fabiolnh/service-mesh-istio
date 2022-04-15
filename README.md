@@ -74,8 +74,9 @@ Some concepts:
 To test:
 ```
 while true ; do curl http://localhost:8000; echo; sleep 0.5; done;
+  OBS: Calling localhost:8000 (OUT OF A POD, OUT OF A PROXY) will access directly the service, so, istio will not work. To work, you need to create a gateway to access the proxy
 
-or:
+or create a pod to execute it: (this way will work)
 
 Use Fortio to execute requests:
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.13/samples/httpbin/sample-client/fortio-deploy.yaml
